@@ -112,7 +112,13 @@ jobs:
 
     - name: Check space usage
       if: (!cancelled())
-      run: df -hT
+      run: |
+        df -hT
+        cd openwrt
+        tar -cvzf bin.tar.gz bin/
+        cd bin
+        rm -rf *
+        mv ../bin.tar.gz ./
 
     - name: Upload bin directory
       uses: actions/upload-artifact@master
